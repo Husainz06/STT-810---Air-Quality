@@ -1,0 +1,7 @@
+matplotlib
+numpy
+pandas
+regex
+scikit-learn
+seaborn
+plotly
