@@ -5,3 +5,4 @@ regex
 scikit-learn
 seaborn
 plotly
+seaborn
