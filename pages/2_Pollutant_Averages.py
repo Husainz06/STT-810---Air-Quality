@@ -3,6 +3,8 @@ import pandas as pd
 import plotly.express as px
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import bootstrap
+
 st.title("Average Pollutants")
 combined_data = pd.read_csv('pollution_data_2023_all.csv')
 pollutants = [
@@ -127,44 +129,40 @@ else:
 
 
 # Bootstrapping:
-
-# Function to perform bootstrapping for the mean
-def bootstrap_mean(data, n_iterations=1000, sample_size=None):
-    if sample_size is None:
-        sample_size = len(data)
-        
-    means = []
-    for _ in range(n_iterations):
-        sample = np.random.choice(data, size=sample_size, replace=True)
-        means.append(np.mean(sample))
-    
-    means = np.array(means)
-    lower_bound = np.percentile(means, 2.5)
-    upper_bound = np.percentile(means, 97.5)
-    
-    return means, lower_bound, upper_bound
-
-# Streamlit app code
-st.header("Bootstrapping the Mean of a Pollutant")
+#https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html
+st.subheader("Bootstrapping the Mean of a Pollutant")
 
 selected_pollutant3 = st.selectbox("Select a Pollutant (or All)",list(pollutants_dictionary.keys()))
 # Filter data
 data = combined_data[pollutants_dictionary[selected_pollutant3]].dropna()
-
-# Perform bootstrapping
-means, lower_bound, upper_bound = bootstrap_mean(data)
-
-# Plotting
-fig, ax = plt.subplots(figsize=(8, 6))
-ax.hist(means, bins=50, alpha=0.7, color='blue', edgecolor='black')
-ax.axvline(np.mean(data), color='red', linestyle='dashed', linewidth=2, label='Original Mean')
-ax.axvline(lower_bound, color='green', linestyle='dashed', linewidth=2, label='95% CI Lower Bound')
-ax.axvline(upper_bound, color='green', linestyle='dashed', linewidth=2, label='95% CI Upper Bound')
-ax.set_title(f"Bootstrapping the Mean of {selected_pollutant3}")
-ax.legend()
-
-# Show the plot
-st.pyplot(fig)
-
-# Display confidence intervals
-st.write(f"Bootstrapped 95% Confidence Interval for {selected_pollutant3}: ({lower_bound:.2f}, {upper_bound:.2f})")
+confidence_level = st.number_input(
+    "Select Confidence Level",
+    min_value=0.0,
+    max_value=1.0,
+    value=0.95, 
+    step=0.05,  
+    format="%.2f" 
+)
+n_iterations = st.number_input(
+    "Select Confidence Level",
+    min_value=100,
+    max_value=10000,
+    value=500, 
+    step=100,  
+    #format="%.2f" 
+)
+#st.write(f"Bootstrapped 95% Confidence Interval for {selected_pollutant3}: ({lower_bound:.2f}, {upper_bound:.2f})")
+with st.spinner("Creating plot.... Please wait."):
+    data = (data,)
+    res = bootstrap(data, np.std, confidence_level=confidence_level, n_resamples=n_iterations)
+    fig, ax = plt.subplots()
+    ax.hist(res.bootstrap_distribution, bins=50, color='cornflowerblue', edgecolor='black', density=True)
+    ax.axvline(res.confidence_interval.low, color='green', linestyle='dashed',  label=f'{confidence_level} CI Lower Bound')
+    ax.axvline(res.confidence_interval.high, color='green', linestyle='dashed',  label=f'{confidence_level} CI Upper Bound')
+    ax.axvline(np.mean(res.bootstrap_distribution), color='red', linestyle='dashed',  label='Original Mean')
+    ax.set_title(f"Bootstrapping the Mean of {selected_pollutant3} with {confidence_level*100}% Confidende Interval")
+    ax.set_xlabel('Level')
+    ax.set_ylabel('Frequency')
+    ax.legend()
+    st.pyplot(fig)
+    st.write(f"Confidence interval: {res.confidence_interval}")

@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 
 
 combined_data = pd.read_csv('pollution_data_2023_all.csv')
+
 # Select columns with pollutant concentrations for PCA
 pollutant_columns = [
     'Daily Mean PM2.5 Concentration', 'Daily Max 8-hour Ozone Concentration', 
@@ -30,8 +31,10 @@ def categorize_aqi(aqi_value):
         return 'Unhealthy for Sensitive Groups'
     elif aqi_value <= 200:
         return 'Unhealthy'
-    else:
+    elif aqi_value <= 300:
         return 'Very Unhealthy'
+    else:
+        return 'Hazardous'
 
 # Feature engineering part: Adding AQI category for Chi-Square
 combined_data['AQI_Category'] = combined_data['Daily AQI Value'].apply(categorize_aqi)
