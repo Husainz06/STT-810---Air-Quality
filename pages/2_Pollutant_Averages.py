@@ -161,7 +161,7 @@ confidence_level = st.number_input(
 n_samples = st.number_input(
     "Select Number of Samples",
     min_value=100,
-    max_value=10000,
+    max_value=100000,
     value=500, 
     step=100,  
     #format="%.2f" 
@@ -169,20 +169,21 @@ n_samples = st.number_input(
 data = combined_data[pollutants_dictionary[selected_pollutant3]].dropna()
 
 # Perform bootstrapping
-means, lower_bound, upper_bound = bootstrap_mean(data, n_iterations= n_samples, conf_lev=confidence_level)
+with st.spinner("Generating confidence intervals....Please wait."):
+    means, lower_bound, upper_bound = bootstrap_mean(data, n_iterations= n_samples, conf_lev=confidence_level)
 
-# Plotting
-fig, ax = plt.subplots(figsize=(8, 6))
-ax.hist(means, bins=50, alpha=0.7, color='blue', edgecolor='black')
-ax.axvline(np.mean(data), color='red', linestyle='dashed', linewidth=2, label='Original Mean')
-ax.axvline(lower_bound, color='green', linestyle='dashed', linewidth=2, label=f'{confidence_level}% CI Lower Bound')
-ax.axvline(upper_bound, color='green', linestyle='dashed', linewidth=2, label=f'{confidence_level}% CI Upper Bound')
-ax.set_title(f"Bootstrapping the Mean of {selected_pollutant3}")
-ax.legend()
+    # Plotting
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.hist(means, bins=50, alpha=0.7, color='blue', edgecolor='black')
+    ax.axvline(np.mean(data), color='red', linestyle='dashed', linewidth=2, label='Original Mean')
+    ax.axvline(lower_bound, color='orange', linestyle='dashed', linewidth=2, label=f'{confidence_level}% CI Lower Bound')
+    ax.axvline(upper_bound, color='green', linestyle='dashed', linewidth=2, label=f'{confidence_level}% CI Upper Bound')
+    ax.set_title(f"Bootstrapping the Mean of {selected_pollutant3}")
+    ax.legend()
 
-# Show the plot
-st.pyplot(fig)
+    # Show the plot
+    st.pyplot(fig)
 
-# Display confidence intervals
-st.write(f"Bootstrapped {confidence_level}% Confidence Interval for {selected_pollutant3}: ({lower_bound:.2f}, {upper_bound:.2f})")
+    # Display confidence intervals
+    st.write(f"Bootstrapped {confidence_level}% Confidence Interval for {selected_pollutant3}: ({lower_bound:.2f}, {upper_bound:.2f})")
 
