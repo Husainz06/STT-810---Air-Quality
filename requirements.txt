@@ -6,3 +6,4 @@ scikit-learn
 seaborn
 plotly
 seaborn
+scipy>=1.7.0
