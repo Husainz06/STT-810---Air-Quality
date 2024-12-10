@@ -42,27 +42,27 @@ contingency_table = pd.crosstab(combined_data['Local Site Name'], combined_data[
 chi2_stat, p_value, dof, expected = stats.chi2_contingency(contingency_table)
 
 st.write("""We performed a Chi-Square Test of Independence to determine whether there is a significant relationship between 
-         the location and the AQI category. 
+         the location and the AQI category. Below is the hypothesis and the outputs of our testing:
 
 - Null Hypothesis (H0): Location and AQI category are independent.
 - Alternative Hypothesis (H1): Location and AQI category are dependent.
 """)
 
 
-st.write(f"""- **Chi-Square Statistic {chi2_stat:.2f}:** 
+st.write(f"""- **Chi-Square Statistic: {chi2_stat:.2f}:** 
     This value measures the difference between the observed frequencies and the expected frequencies under 
     the null hypothesis. A higher Chi-Square statistic suggests a larger discrepancy, indicating a stronger 
     association between the variables being tested (in this case, location and AQI category).""")  
-st.write(f"""- **P-Value {p_value:.3f}:**
+st.write(f"""- **P-Value: {p_value:.3f}:**
     The p-value tells us whether the observed difference is statistically significant. In this case, 
-         the p-value of 0.000 indicates that the probability of obtaining the observed data, assuming the 
+         the p-value of {p_value:.3f} indicates that the probability of obtaining the observed data, assuming the 
          null hypothesis is true, is almost zero. Since this is much smaller than the typical significance 
          level of 0.05, we reject the null hypothesis and conclude that there is a significant relationship 
          between location and AQI category.""")
     
-st.write(f"""- **Degrees of Freedom ({dof}:**
+st.write(f"""- **Degrees of Freedom: {dof}:**
     Degrees of freedom represent the number of independent comparisons we can make between the groups.
-    In this case, it is 92, which corresponds to the number of categories in our contingency table.""")
+    In this case, it is {dof}, which corresponds to the number of categories in our contingency table.""")
 
 # Cheching hypothesis using p-value
 if p_value < 0.05:

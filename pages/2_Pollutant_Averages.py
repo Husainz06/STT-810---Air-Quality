@@ -249,8 +249,8 @@ st.markdown("""Below is how we can interpret the bootstrap plot above:
             of means from the bootstrap samples.
 
 - **Confidence Intervals**: are the ranges where the true population mean is likely to fall, based on the bootstrapped data. 
-            For example, if we're looking at a 95% confidence interval, it means that, if we were to take many samples from 
-            the population, 95% of them would likely fall within this range. 
+            For example, if we're looking at a 95\% confidence interval, it means that, if we were to take many samples from 
+            the population, 95 of them would likely fall within this range. 
 
 ### What Does This Tell Us?
 
