@@ -25,8 +25,7 @@ st.subheader('Raw Data Sample')
 st.write("""Below is a sample of the raw data we acquired form the EPA website which shows CO data.""")
 st.write(co_data.head(50))
 
-st.write("""As seen from the dataset above, it only contains the data for one pollutant. For our analysis, we need all pollutants to 
-         be included in one dataset.""")
+st.write("""The dataset above only contains the data for one pollutant, but all pollutants should be included in the data moving forward.""")
 
 #selecting columns to merge to the full dataset
 #CO
@@ -52,9 +51,9 @@ so2_data_columns = so2_data[['Date', 'Site ID','Local Site Name','AQS Parameter 
                              ,'Units','Daily AQI Value']]
 
 st.title("Preparing the Dataset")
-st.write("""As seen from the dataset above, it only contains the data for one pollutant. For our analysis, we need all pollutants to 
-         be included in one dataset. For the purposes of this project, we do not really need all columns of the dataset. 
-         For that reason, we selected the columns that we need for our analysis, which are:
+st.write("""Initial data sets provided only contain information for one pollutant per data frame. For analysis, all pollutants need to 
+         be included in one dataset. For the purposes of this project, all columns of the dataset are not nessearly needed; 
+         The columns that are need for our analysis are:
 
 - Date
 - Site ID
@@ -64,7 +63,7 @@ st.write("""As seen from the dataset above, it only contains the data for one po
 - Units
 - Daily AQI Value
 
-Below is a sample of what that looks like.
+Below is a sample of what the full data table looks like after combining all criteria pollutant data.
 """)
 st.write(co_data_columns.head(50))
 
@@ -78,17 +77,15 @@ combined_data = pd.merge(combined_data, pb_data_columns, on=['Date', 'Site ID'],
 
 combined_data.to_csv('pollution_data_2023_all.csv', index=False)
 st.subheader("Generated Data Sample")
-st.write("""To be able to perform our analysis, we need to have all pollutants in one dataset.
-         For that reason, we have combined all datasets int one dataset that contains all pollutant
-         data after removing the un-needed columns. This resulted in lots of missing values due to the
-         nature of the datasets since not all pollutants are tracked in all locations and not all 
-         pollutants are tracked within the same periods. The dataset is then saved as a file called 'pollution_data_2023_all.csv'
-         which we will use for the rest of our analysis. Below is some description of what the data looks like.""")
+st.write("""The merging of datasets resulted in lots of missing values since not all pollutants are equaly tracked in all geological locations.
+         The dataset merged dataset was saved as a file called 'pollution_data_2023_all.csv' on the apps Github page.
+         The merged dataset will use for the rest of this pages analysis. 
+         Below is a sample of what the combine data set looks like.""")
 st.write(combined_data.head(50))
 
 st.subheader("Basic Statistics")
-st.write("""The first step of our analysis is to perform basic statistics analysis on the dataset to 
-         see how the data looks like. Below is some basic statistics of the data.""")
+st.write("""The first step of analysis is to calculate basic statistics on the dataset to 
+         get an idea for how our data is distributed. Below is a statistical summery of the data.""")
 st.write(combined_data.describe())
 
 pollutants = [
@@ -102,15 +99,12 @@ pollutants = [
 ]
 
 st.subheader('Missingess')
-st.write("As can be seen from the basic statistics above, there's a good amount of missing data due to the \
-         following facts: ")
 
 st.write("""
-As can be seen from the basic statistics above, there's a good amount of missing data due to the following facts:
+The statistical summery above shows diffent variable lengths of data collected accross diffrent polutents. Diffent lengths in variable data are most likely due to:
 
-- Different reading dates for some pollutants, which will have a missing value for any pollutant that is not read on that date.
-- Different reading intervals for some pollutants.
-- Different reading locations for some pollutants, which will have a missing value for any pollutant that is not read at that location.
+- Inconsistent recording dates and times for some pollutants, which will have a missing value for any pollutant that is not read on that date.
+- Recording for some pollutants is dependent on location, which will have a missing value for any pollutant that is not read at that location.
 """)
 st.write("The heatmap below shows a visualization of the missing vsalues.")
 
@@ -130,7 +124,7 @@ heatmap = go.Heatmap(
 # Update layout
 fig = go.Figure(data=[heatmap])
 fig.update_layout(
-    title='Missing Data Across Locations',
+    title='Missing Data Across Location',
     xaxis_title='Location',
     yaxis_title='Pollutants',
     height = 800,
@@ -151,7 +145,7 @@ heatmap = go.Heatmap(
 # Update layout
 fig = go.Figure(data=[heatmap])
 fig.update_layout(
-    title='Missing Data Across Dates',
+    title='Missing Data Across Time',
     xaxis_title='Date',
     yaxis_title='Pollutants',
     height = 550,
@@ -163,27 +157,24 @@ st.plotly_chart(fig)
 st.subheader("Interpreting the Missing Data Heatmap")
 
 st.markdown("""
-The missing data heatmap provides a visual representation of how much data is missing across different variables in the dataset.
-             Missing data is common in real-world datasets, and understanding its distribution is crucial for deciding how to handle 
-            it in the analysis. here is what the different parts of it mean:
+            Missing data heatmaps provides a visual representation of how much data is missing across different variables in the dataset.
+            Understanding the distribution of missing data is crucial for deciding how to handle missingness
+            in the analysis. Here is how to interpret the missing data heatmap:
 
-- **Colors**: The heatmap uses color coding to indicate the presence or absence of data. 
-  - The**light or white areas** represent **missing data**, while **darker shades** represent **available data**.
+- **Colors**: Color coding is used to indicate the presence or absence of data. 
+  - The**light or white areas represented by a 0** represent **missing data**, while **darker colors represented by a 1**, represent **available data**.
 - **Rows**: Each row represents a different variable (i.e., pollutant or feature) in the dataset.
-- **Columns**: Each column represents a data point for the corresponding variable. The first heatmap shows which specific location
-            has missing values while the second one shows wich dates have missing values.""")
+- **Columns**: Each column represents a data point for the corresponding variable. """)
 
 st.subheader("Insights form the Heatmaps")
 st.markdown("""
 - **Spotting Missing Data Trends**:
-   - Large blocks of **light-colored cells** in the heatmap indicate a significant amount of missing data for those particular variables. 
-            This suggests that for those pollutants or features, data might not have been recorded for many days or locations.
-   - If the missing data is **concentrated around specific periods**, it could indicate an issue with data collection during those times, 
-            such as equipment failure or reporting lapses.
+   - Large blocks of missing data suggest a potential pause in data collection. 
+            The reason for a pause in data collection could be related or unrelated to important environmental factors so carful considration of imputation to large blocks of missing data is required.
   
 - **Identifying Patterns**:
-   - If the missing data is **random**, it might not significantly impact any  analysis. However, if the missing data follows a 
-            **pattern** - like the data we have here -, it could suggest something systematic about how data is being collected 
+   - If the missing data seems **random**, it might not significantly impact any  analysis. However, if the missing data follows a 
+            **pattern** - like the current data -, it could suggest something systematic about how data is being collected 
             or processed.
         - **Patterns in time**: If the data is missing predominantly on certain dates or seasons, it may indicate a seasonal problem 
             with monitoring equipment or data reporting.
