@@ -16,17 +16,17 @@ pollutants = [
 ]
 
 st.header("Calculating Average Pollutants")
-st.write("""One of the important measures in our analysis is calculating the average pollutant per 
-         location. This gives some insight about the pollution in those locations. Below is the calculated
-         averages of the pollutants per location. As mentioned in the 'Data Overview' page, some locations
+st.write("""An important measures of analysis is calculating the average of all pollutants per 
+         location on any given day. This gives some insight about the pollution vs geographical location. Below is the calculated
+         average of the pollutants per location on any given day. As mentioned in the 'Data Overview' page, some locations
          do not keep track of all pollutants and that's why some data is not present in this table.""")
 average_pollutants = combined_data.groupby('Local Site Name')[pollutants].mean().reset_index()
 st.table(average_pollutants)
 st.subheader('2023 Pollutant Averages')
-st.write("""The following plot shows the average pollutants in 2023 over the reading location in the state of Michgan. This gives us
-         a general idea on what locations are polluted the most and what pollutants are present the most in these locations.
-         The following plot is interactive, you can expand it to fill the screen by using the full screen mode, show/hide locations by
-         clicking them in the legend, and you can double click a legend item to remove all items and keep that item alone.""")
+st.write("""The following bar plot shows the average pollutant levels per day in 2023 accross the state of Michgan. The bar plot provides a
+         general idea on which locations have higher air pollution concentrations and what pollutant, of the once recorded in an area, are most present.
+         The bar plot is interactive, you can expand it to fill the screen by using the full screen mode, show/hide locations by
+         clicking them in the legend, and you can double click a legend item to remove all other items.""")
 # Set the index to 'Local Site Name' and transpose the DataFrame
 average_pollutants.set_index('Local Site Name', inplace=True)
 average_pollutants = average_pollutants.transpose()
