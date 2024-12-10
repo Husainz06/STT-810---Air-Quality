@@ -58,7 +58,8 @@ st.write(f"""- **P-Value: {p_value:.2e}:**
          the p-value of {p_value:.2e} indicates that the probability of obtaining the observed data, assuming the 
          null hypothesis is true, is almost zero. Since this is much smaller than the typical significance 
          level of 0.05, we reject the null hypothesis and conclude that there is a significant relationship 
-         between location and AQI category.""")
+         between location and AQI category. While we found sites are statistically different from each other,
+         each specific pair of sites would need its own Chi-square test and p-vale to determine if two specific sites are different from each other.""")
     
 st.write(f"""- **Degrees of Freedom: {dof}:**
     Degrees of freedom represent the number of independent comparisons we can make between the groups.
