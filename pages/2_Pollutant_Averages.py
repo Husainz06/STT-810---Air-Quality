@@ -47,9 +47,8 @@ st.plotly_chart(fig)
 
 st.subheader('Average Pollutant Level')
 # Plot 1:  Year average - location based
-st.markdown("""Below, we can see the averages of the pollutants over the year 2023. This can help us understand the levels of different
-            pollutants over different locations which can provide a general idea about the pollutants and their levels in michigan. 
-            We need to keep in mind that these pollutants are not tracked in all locations i.e. some pollutants are tracked in more locations
+st.markdown("""Below, are the daily averages of the pollutants per location over the year 2023. 
+            Keep in mind that these pollutants are not tracked in all locations i.e. some pollutants are tracked in more locations
             than others.""")
 pollutants_dictionary = {
     'PM2.5': 'Daily Mean PM2.5 Concentration',
@@ -107,13 +106,11 @@ if not filtered_data.empty:
 else:
     st.write("No data available for the selected pollutant and locations.")
 
-st.markdown("""While the plot above shows us the averages of pollutaionts over the year 2023, it only shows the overall average per 
-            location. While this information is very useful, we would need to know how the levels are trending over the years to be
-            able to further an alyze the data.""")
+st.markdown("""While not expicitly shown by the data, We can see a pattern in the plot above where the higher the total polutents in an area, the more polutents are recorded in the area.
+               The recording of polutents beyond PM2.5 trends with an increase population and urban development""")
 st.subheader("Filtering Averages by Month")
-st.markdown("""To better understand pollution, we need to be able to check the averages during different periods of time. 
-         Below we can filter by month and location to allow getting more detailed information about the averages. This can
-         provide more insights about the pollution and possible external factors that can impact the pollution levels.
+st.markdown(""" Understanding pollution over time can help identify temporal trends in the data. 
+         The chart below is filter by month and location to allow getting more detailed information about the daily polution averages over time.
          
 Use the drop-down menus below to display average pollutant level on some michigan locations. If there's no information on the plot, 
             this means that the pollutant is not being tracked at that location.""")
@@ -134,12 +131,12 @@ fig = px.bar(filtered_data, x='Date', y=pollutants_dictionary[selected_pollutant
 st.plotly_chart(fig)
 
 st.markdown("""
-When we look at the month-filtered plot, we can see a clear spice in some pollutants in a specific time period 
-            which is around mid 2023. This is not "normal" if we compare it to the rest of the year and it was caused by the 
-            wildfires incidnet that happened in **Canada** in mid 2023, particularly in the **Quebec** and **Ontario** regions.
-            This led to significant air quality issues across parts of North America. The smoke from these fires spread over vast distances, 
+When we look at the month-filtered plot, we can see a clear outlier in some pollutants around mid 2023. 
+            if we compare the mid summer outliers events during the year, we find that the polutent outliers was most likely cused by a wildfire. 
+            **Canada** in mid 2023, particularly in the **Quebec** and **Ontario** regions experiance some of the worst wildfires ever recorded.
+            The smoke from the canaidan wildfires fires spread over vast distances, 
             drifting into the  United States, including Michigan, during the late spring and early summer months.
-             Wildfire smoke contains large amounts of fine particulate matter (PM2.5), carbon monoxide (CO), and ground-level ozone. 
+            Wildfire smoke contains large amounts of fine particulate matter (PM2.5), carbon monoxide (CO), and ground-level ozone. 
 
 During the wildfire event, spikes in PM2.5, ozone, and other pollutants were noticeable in the data for Michigan. These peaks were 
             particularly sharp during the months of **June and July 2023**, when the wildfires were at their peak intensity. 
