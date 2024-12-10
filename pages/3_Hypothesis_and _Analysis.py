@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
 import scipy.stats as stats
 import seaborn as sns
 import numpy as np
@@ -101,7 +99,7 @@ st.write("""- Locations with darker shades in certain AQI categories indicate mo
 - By examining the heatmap, you can identify trends, such as whether certain locations tend to have more 'Unhealthy' 
       or 'Good' air quality days.""")
 
-st.header("Multivariate Analysis - Correlation and Covariance")
+st.header("Multivariate Analysis - Covariance and Correlation")
 
 st.write("""This heatmaps visualize relationships between different pollutants using correlation and covariance. 
     These heatmaps provide insights into how pollutants in the air are related to each other.""")
@@ -113,6 +111,16 @@ pollutant_data = combined_data[pollutant_columns]
 corr_matrix = pollutant_data.corr()
 cov_matrix = pollutant_data.cov()
 
+st.subheader("Covariance Heatmap")
+st.markdown("""The covariance heatmap shows the covariance between different pollutants. Covariance measures how much two 
+            variables change together.
+    - A positive covariance means that as one variable increases, the other also also increases.
+    - A negative covariance means that as one variable increases, the other decreases decreases.""")
+
+plt.figure(figsize=(14, 10))
+sns.heatmap(cov_matrix, annot=True, cmap='YlGnBu', fmt='.2f', cbar=True, linewidths=0.5, square=True)
+st.pyplot(plt)
+
 
 st.subheader("Correlation Heatmap")
 st.write("""The correlation heatmap shows how different pollutants are linearly related to each other. 
@@ -123,30 +131,20 @@ st.write("""The correlation heatmap shows how different pollutants are linearly 
     - A value close to 0 means that there is no linear correlation.
 """)
 plt.figure(figsize=(14, 10))
-sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt='.2f', cbar=True, linewidths=0.5, square=True)
+sns.heatmap(corr_matrix, annot=True, cmap='YlGnBu', fmt='.2f', cbar=True, linewidths=0.5, square=True)
 st.pyplot(plt)
 
-
-st.subheader("Covariance Heatmap")
-st.markdown("""The covariance heatmap shows the covariance between different pollutants. Covariance measures how much two 
-            variables change together.
-    - A positive covariance means that as one variable increases, the other also also increases.
-    - A negative covariance means that as one variable increases, the other decreases decreases.""")
-
-plt.figure(figsize=(14, 10))
-sns.heatmap(cov_matrix, annot=True, cmap='coolwarm', fmt='.2f', cbar=True, linewidths=0.5, square=True)
-st.pyplot(plt)
 
 
 st.subheader("Insights from the Heatmaps")
+st.write("""- Covariance Heatmap: When we look at the covariance matrix, we can see the values vary accross pollutants. Here, positive 
+         values indicate that pollutants increase or decrease together, but the scale of these values depends on the units of the 
+         pollutants.""")
 st.write("""- Correlation Heatmap: Looking for pairs of pollutants with strong correlations (close to 1 or -1). 
       For example, we can clearly see a veru high correlation between `PM2.5` and `PM10` which indicates that they often occur 
       together in certain environments. We can also see a strong positivs correlation between `PM10` and carbon monoxide (`CO`) which
       also tells us that they tend to occur together. Combining these two points, we can conclude that there is a correlation between
       `PM2.5` and `CO` which is confirmed by the heatmap although it is not as strong as the previous two.\n""")
-st.write("""- Covariance Heatmap: When we look at the covariance matrix, we can see the values vary accross pollutants. Here, positive 
-         values indicate that pollutants increase or decrease together, but the scale of these values depends on the units of the 
-         pollutants.""")
 
 
 
