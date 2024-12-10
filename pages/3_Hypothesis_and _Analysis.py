@@ -53,9 +53,9 @@ st.write(f"""- **Chi-Square Statistic: {chi2_stat:.2f}:**
     The Chi-square value measures the difference between the observed frequencies and the expected frequencies under 
     the null hypothesis. A higher Chi-Square statistic suggests a larger discrepancy, indicating a stronger 
     association between the variables being tested (in this case, location and AQI category).""")  
-st.write(f"""- **P-Value: {p_value:.4f}:**
+st.write(f"""- **P-Value: {p_value:.3e}:**
     The p-value tells us whether the observed difference is statistically significant. In this case, 
-         the p-value of {p_value:.4f} indicates that the probability of obtaining the observed data, assuming the 
+         the p-value of {p_value:.3e} indicates that the probability of obtaining the observed data, assuming the 
          null hypothesis is true, is almost zero. Since this is much smaller than the typical significance 
          level of 0.05, we reject the null hypothesis and conclude that there is a significant relationship 
          between location and AQI category.""")
