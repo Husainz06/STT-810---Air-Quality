@@ -41,7 +41,7 @@ combined_data['AQI_Category'] = combined_data['Daily AQI Value'].apply(categoriz
 contingency_table = pd.crosstab(combined_data['Local Site Name'], combined_data['AQI_Category'])
 chi2_stat, p_value, dof, expected = stats.chi2_contingency(contingency_table)
 
-st.write("""We performed a Chi-Square Test of Independence to determine whether there is a significant relationship between 
+st.write("""A Chi-Square Test of Independence was preformed to determine whether there is a significant relationship between 
          the location and the AQI category. Below is the hypothesis and the outputs of our testing:
 
 - Null Hypothesis (H0): Location and AQI category are independent.
@@ -50,12 +50,12 @@ st.write("""We performed a Chi-Square Test of Independence to determine whether 
 
 
 st.write(f"""- **Chi-Square Statistic: {chi2_stat:.2f}:** 
-    This value measures the difference between the observed frequencies and the expected frequencies under 
+    The Chi-square value measures the difference between the observed frequencies and the expected frequencies under 
     the null hypothesis. A higher Chi-Square statistic suggests a larger discrepancy, indicating a stronger 
     association between the variables being tested (in this case, location and AQI category).""")  
-st.write(f"""- **P-Value: {p_value:.3f}:**
+st.write(f"""- **P-Value: {p_value:.4f}:**
     The p-value tells us whether the observed difference is statistically significant. In this case, 
-         the p-value of {p_value:.3f} indicates that the probability of obtaining the observed data, assuming the 
+         the p-value of {p_value:.4f} indicates that the probability of obtaining the observed data, assuming the 
          null hypothesis is true, is almost zero. Since this is much smaller than the typical significance 
          level of 0.05, we reject the null hypothesis and conclude that there is a significant relationship 
          between location and AQI category.""")
@@ -85,9 +85,9 @@ st.pyplot(fig)
 st.write("""The heatmap above visualizes the distribution of AQI categories across different locations. Each cell in the heatmap 
     represents the count of observations for a specific combination of location and AQI category.
          
-- Columns (AQI Category): These represent the different categories of air quality based on AQI values, including 
+- Columns (AQI Category): Columns represent different categories of air quality based on AQI values; 
       'Good', 'Moderate', 'Unhealthy for Sensitive Groups', 'Unhealthy', and 'Very Unhealthy'.
-- Rows (Location): These represent different locations where air quality measurements were taken.
+- Rows (Location): Rows represent different locations where air quality measurements were taken.
 - Cell Values: The numbers in each cell indicate the number of times a specific AQI category was recorded for that 
       location.
 - Color Intensity: The color intensity is a representaion of the cells value: darker colors indicate a higher count 
@@ -137,14 +137,13 @@ st.pyplot(plt)
 
 
 st.subheader("Insights from the Heatmaps")
-st.write("""- Covariance Heatmap: When we look at the covariance matrix, we can see the values vary accross pollutants. Here, positive 
-         values indicate that pollutants increase or decrease together, but the scale of these values depends on the units of the 
-         pollutants.""")
-st.write("""- Correlation Heatmap: Looking for pairs of pollutants with strong correlations (close to 1 or -1). 
-      For example, we can clearly see a veru high correlation between `PM2.5` and `PM10` which indicates that they often occur 
-      together in certain environments. We can also see a strong positivs correlation between `PM10` and carbon monoxide (`CO`) which
-      also tells us that they tend to occur together. Combining these two points, we can conclude that there is a correlation between
-      `PM2.5` and `CO` which is confirmed by the heatmap although it is not as strong as the previous two.\n""")
+st.write("""- Correlation Heatmap: The correlation matrix shows covariance of criteria pollutant records over time. Laeger positive 
+         values indicate that the two intersecting pollutants, are more likely positively correlated.""")
+st.write("""- Correlation Heatmap: Pairs of pollutants with strong correlations (close to 1 or -1), like `PM2.5` and `PM10`, indicates that they often occur together in certain environments. 
+      `PM2.5` and `PM10` are likely positively correlated because the two pollutants are brough categories of pollutants that often come from the same source.
+      Another promising correlations observed is between `PM10` and carbon monoxide (`CO`).
+      ('CO') is one of the most common pollutants that makes up 'PM10' so its reasonable to believe the two pollutants are correlated.
+      `PM2.5` and `CO` which is suggested to be positively correlated confirmed by the heatmap although it suggested that they might share a confounder in 'PM10'.\n""")
 
 
 
