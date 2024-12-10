@@ -90,7 +90,7 @@ st.write("""The heatmap above visualizes the distribution of AQI categories acro
 - Rows (Location): These represent different locations where air quality measurements were taken.
 - Cell Values: The numbers in each cell indicate the number of times a specific AQI category was recorded for that 
       location.
-- Color Intensity: The color intensity represents the frequency of occurrences: darker colors indicate a higher count 
+- Color Intensity: The color intensity is a representaion of the cells value: darker colors indicate a higher count 
       of observations, while lighter colors represent fewer occurrences.""")
 
 st.subheader('Key Insights')
@@ -112,7 +112,7 @@ corr_matrix = pollutant_data.corr()
 cov_matrix = pollutant_data.cov()
 
 st.subheader("Covariance Heatmap")
-st.markdown("""The covariance heatmap shows the covariance between different pollutants. Covariance measures how much two 
+st.markdown("""The correlatione heatmap shows the covariance between different features of a dataset. Covariance is a measure of how much two 
             variables change together.
     - A positive covariance means that as one variable increases, the other also also increases.
     - A negative covariance means that as one variable increases, the other decreases decreases.""")
