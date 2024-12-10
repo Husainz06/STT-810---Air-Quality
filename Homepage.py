@@ -17,14 +17,13 @@ st.header("Air Pollution and Key Pollutants we Tracked")
 
 
 st.markdown("""
-Air pollution consists of various harmful substances that affect human health and the environment. The following pollutants 
-are closely monitored by the EPA:
+The following list pollutants called criteria pollutents and have national laws limiting there expoures to the enviroment:
 
 - **Carbon Monoxide (CO)**: A colorless, odorless gas that can interfere with the body's ability to absorb oxygen, especially 
 harmful in enclosed spaces. [Learn more about CO](https://www.epa.gov/co-pollution)
 
 - **Particulate Matter (PM2.5 and PM10)**: Fine particles in the air that can be inhaled into the lungs. PM2.5, which is smaller 
-than PM10, is particularly dangerous due to its ability to reach deep into the respiratory system. 
+than PM10, is particularly irritating due to its ability to reach deep into the respiratory system. 
 [Learn more about PM](https://www.epa.gov/pm-pollution)
 
 - **Ozone (O₃)**: A harmful air pollutant that forms when sunlight reacts with pollutants from vehicles and industrial emissions. 
@@ -43,9 +42,9 @@ paints, contaminated water, and air pollution. [Learn more about Lead](https://w
 st.header("The Role of the Environmental Protection Agency (EPA)")
 
 st.markdown("""
-The **Environmental Protection Agency (EPA)** is a U.S. government agency that protects human health and the environment. 
-It monitors air quality nationwide through a network of air quality monitoring stations. The EPA sets air quality standards 
-for pollutants and provides real-time data on pollution levels via the **Air Quality Index (AQI)**. 
+The **Environmental Protection Agency (EPA)** is a U.S. government agency that protects the environment. 
+The EPA monitors air quality nationwide through a network of air quality monitoring stations. The EPA lobbies for air quality standards 
+of criteria pollutants and provides real-time data on pollution levels via the **Air Quality Index (AQI)**. 
 
 For more details about the EPA and their role in air quality, visit [EPA website](https://www.epa.gov/).
 """)
@@ -54,8 +53,8 @@ For more details about the EPA and their role in air quality, visit [EPA website
 st.subheader("What This Application Does")
 
 st.markdown("""
-This application allows you to explore and analyze air quality data across Michigan in 2023. Using datasets from the EPA, this 
-application visualizes pollution levels for several key pollutants, including CO, PM2.5, PM10, ozone, NO₂, SO₂, and Pb. 
+This application allows you to explore air quality data across Michigan. Using datasets from the EPA dating in 2023, this 
+application visualizes pollution levels for most criteria pollutants. 
             The main features of the app include:
 
 - **Pollution Visualizations**: Interactive graphs and maps showing pollution levels across Michigan.
