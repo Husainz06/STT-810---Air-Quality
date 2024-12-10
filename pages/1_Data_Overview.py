@@ -180,10 +180,10 @@ st.markdown("""
             with monitoring equipment or data reporting.
 
 - **Insight into the Quality of the Data**:
-The heatmap gives us a quick overview of the **completeness** of the dataset. It helps us assess the overall **quality** 
+The missing value heatmap gives a quick overview of **completeness** of the dataset. It helps assess the overall **quality** 
             of the data before moving on to more complex analyses like hypothesis testing, correlations, or predictions.
-By interpreting the missing data heatmap, we can gain valuable insights into the data quality and identify any issues 
-            with missing values that might affect our analysis. It allows us to decide on the best course of action for 
-            dealing with missing data, whether that means imputing values, removing columns, or performing further investigation.
+Interpreting the missing data heatmap can gain valuable insights into patterns of missingness
+            that might affect our analysis. Knowledge of missingness allows decicions to be made on how to handdle the missing data; 
+            whether that means imputing values, removing columns, or performing further investigation.
 """)
 
