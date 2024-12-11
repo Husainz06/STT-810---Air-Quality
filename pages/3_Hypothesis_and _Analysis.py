@@ -41,8 +41,8 @@ combined_data['AQI_Category'] = combined_data['Daily AQI Value'].apply(categoriz
 contingency_table = pd.crosstab(combined_data['Local Site Name'], combined_data['AQI_Category'])
 chi2_stat, p_value, dof, expected = stats.chi2_contingency(contingency_table)
 
-st.write("""A Chi-Square Test of Independence was preformed to determine whether there is a significant relationship between 
-         the location and the AQI category. Below is the hypothesis and the outputs of our testing:
+st.write("""A Chi-Square Test of Independence was preformed on location and the AQI category to determine whether there is a significant relationship between variables. 
+        Below is the hypothesis and the outputs of our testing:
 
 - Null Hypothesis (H0): Location and AQI category are independent.
 - Alternative Hypothesis (H1): Location and AQI category are dependent.
@@ -63,7 +63,7 @@ st.write(f"""- **P-Value: {p_value:.2e}:**
     
 st.write(f"""- **Degrees of Freedom: {dof}:**
     Degrees of freedom represent the number of independent comparisons we can make between the groups.
-    In this case, it is {dof}, which corresponds to the number of categories in our contingency table.""")
+    In this case, it is {dof}, which corresponds closely to the number of samples in our contingency table.""")
 
 # Cheching hypothesis using p-value
 if p_value < 0.05:
