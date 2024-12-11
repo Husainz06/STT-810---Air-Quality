@@ -47,7 +47,7 @@ st.plotly_chart(fig)
 
 st.subheader('Average Pollutant Level')
 # Plot 1:  Year average - location based
-st.markdown("""Below, are the daily averages of the pollutants per location over the year 2023. 
+st.markdown("""Below, days with highest recorded pollutent level for each site in the year 2023.
             Keep in mind that these pollutants are not tracked in all locations i.e. some pollutants are tracked in more locations
             than others.""")
 pollutants_dictionary = {
