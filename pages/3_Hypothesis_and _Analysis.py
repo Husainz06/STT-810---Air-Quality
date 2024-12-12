@@ -167,10 +167,10 @@ sns.heatmap(corr_matrix, annot=True, cmap='YlGnBu', fmt='.2f', cbar=True, linewi
 st.pyplot(plt)
 
 
-# ---------------------------------------   Subection 2.3: Insights part -------------------------------
+# ---------------------------------------   Subection 2.3: Insights -------------------------------
 
 st.subheader("Insights from the Heatmaps")
-st.write("""- Correlation Heatmap: The correlation matrix shows covariance of criteria pollutant records over time. Laeger positive 
+st.write("""- Covariance Heatmap: The covariance matrix shows covariance of criteria pollutant records over time. Laeger positive 
          values indicate that the two intersecting pollutants, are more likely positively correlated.""")
 st.write("""- Correlation Heatmap: Pairs of pollutants with strong correlations (close to 1 or -1), like `PM2.5` and `PM10`, indicates that they often occur together in certain environments. 
       `PM2.5` and `PM10` are likely positively correlated because the two pollutants are brough categories of pollutants that often come from the same source.
