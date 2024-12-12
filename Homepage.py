@@ -1,10 +1,20 @@
+# ------------------------------------------------------------------------------
+# STT 810 Final Project : Michigan Air Quality Analysis
+# Authors: Hussian Aljafer , Jack Ruhala , Bhavya Chawla
+# Page Description: This is the homepage showing general project information
+# Date Created: Dec. 2024
+# Libraries needed to run the page: streamlit
+# Refer to 'README.md' for more information
+# GitHub repository link: https://github.com/Husainz06/STT-810---Air-Quality.git
+# ------------------------------------------------------------------------------
+
+# Importing the required libraries
 import streamlit as st
 
-# Set page title
+# Setting the page title
 st.title("Michigan Air Quality Analysis")
 
-
-# Introduction paragraph
+# -----------------------     Introduction paragraph    ----------------------------------------
 st.markdown("""
 Air pollution is a growing concern across the globe, with significant implications for human health, the environment, 
 and the economy. In Michigan, air quality is a critical issue, with pollutants like ozone, particulate matter, and nitrogen 
@@ -12,10 +22,9 @@ dioxide affecting both urban and rural areas. This project aims to bring clarity
 into pollution levels across Michigan in 2023 using data from the [Environmental Protection Agency (EPA)](https://www.epa.gov/).
 """)
 
-# Section: Understanding Air Pollution and Key Pollutants
+
+# ------------------------     Section1 : Understanding Air Pollution and Key Pollutants   --------------------------------
 st.header("Air Pollution and Key Pollutants we Tracked")
-
-
 st.markdown("""
 The following list pollutants called criteria pollutents and have national laws limiting there expoures to the enviroment:
 
@@ -38,9 +47,8 @@ irritate the respiratory system and contribute to acid rain. [Learn more about S
 - **Lead (Pb)**: A toxic metal that can cause serious health problems, particularly in children. Lead exposure can come from old 
 paints, contaminated water, and air pollution. [Learn more about Lead](https://www.epa.gov/lead)""")
 
-# Section: The Role of the EPA
+# -----------------------------------------     Section2 : The Role of the EPA    ----------------------------------------- 
 st.header("The Role of the Environmental Protection Agency (EPA)")
-
 st.markdown("""
 The **Environmental Protection Agency (EPA)** is a U.S. government agency that protects the environment. 
 The EPA monitors air quality nationwide through a network of air quality monitoring stations. The EPA lobbies for air quality standards 
@@ -49,21 +57,18 @@ of criteria pollutants and provides real-time data on pollution levels via the *
 For more details about the EPA and their role in air quality, visit [EPA website](https://www.epa.gov/).
 """)
 
-# Section: What This Application Does
+# -----------------------------------------    Section 3: What This Application Does    -----------------------------------------
 st.subheader("What This Application Does")
-
 st.markdown("""
 This application allows you to explore air quality data across Michigan. Using datasets from the EPA dating in 2023, this 
 application visualizes pollution levels for most criteria pollutants. 
             The main features of the app include:
-
 - **Pollution Visualizations**: Interactive graphs and maps showing pollution levels across Michigan.
 - **Location Filtering**: Focus on specific regions in Michigan to analyze air quality.
 - **Bootstrap Analysis**: Assess the variability of pollutants using bootstrapped means with user-defined confidence intervals.
 - **Hypothesis Testing**: Check if there is any correlation between pollution levels and specific locations.
     - Using Feature engineering to add a 'Qaulity Measure' column to allow use for $$Chi^2$$ hypothesis testing.
 - **Covariance and Correlation Matrices**: Analyze the relationships between different pollutants.
-
 The goal is to make air quality data more accessible and provide insights into pollution trends, helping to understand its impact 
 on public health and the environment.
 """)

@@ -1,8 +1,20 @@
+# ------------------------------------------------------------------------------
+# STT 810 Final Project : Michigan Air Quality Analysis
+# Authors: Hussian Aljafer , Jack Ruhala , Bhavya Chawla
+# Page Description: This page loads and combines the data, creates a combined data file
+# calculates basic descriptive statistics, and analyzes missing values
+# Date Created: Dec. 2024
+# Libraries needed to run the page: streamlit, pandas, plotly
+# Refer to 'README.md' for more information
+# GitHub repository link: https://github.com/Husainz06/STT-810---Air-Quality.git
+# ------------------------------------------------------------------------------
+
+# Importing required libraries
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-from sklearn.utils import resample
 
+#------------------------------------    Section1: overview ------------------------------------
 st.title('Data Overview')
 st.write("Data sets were obtained from epa.gov as seperate files for each of \
          the pollutants. We needed to combine the files to create a single dataset. \
@@ -11,7 +23,7 @@ st.write("Data sets were obtained from epa.gov as seperate files for each of \
          losing data. Below is an overview of the dataset that we created.")
 
 
-#Read all csv files
+# Reading all csv files
 co_data = pd.read_csv('2023_CO.csv')
 ozone_data = pd.read_csv('2023_Ozone.csv')
 no2_data = pd.read_csv('2023_NO2.csv')
@@ -20,36 +32,41 @@ pm10_data = pd.read_csv('2023_PM10.csv')
 pm25_data = pd.read_csv('2023_PM25.csv')
 so2_data = pd.read_csv('2023_SO2.csv')
 
-# Sample raw data
+# Sample raw data: CO data
 st.subheader('Raw Data Sample')
 st.write("""Below is a sample of the raw data we acquired form the EPA website which shows CO data.""")
+
+# Showing the first 50 entries of the raw CO dataset
 st.write(co_data.head(50))
+st.write("""The dataset above only contains the data for one pollutant, but all pollutants should be included in 
+         the data moving forward.""")
 
-st.write("""The dataset above only contains the data for one pollutant, but all pollutants should be included in the data moving forward.""")
-
-#selecting columns to merge to the full dataset
-#CO
+# Selecting columns to merge to the full dataset
+# CO dataset
 co_data_columns = co_data[['Date', 'Site ID','Local Site Name','Site Latitude','Site Longitude', 
                             'AQS Parameter Description','Daily Max 8-hour CO Concentration','Units','Daily AQI Value']]
-#Ozone
+# Ozone dataset
 ozone_data_columns = ozone_data[['Date', 'Site ID','Local Site Name','AQS Parameter Description',
                                   'Daily Max 8-hour Ozone Concentration','Units','Daily AQI Value']]
-#NO2
+# NO2 dataset
 no2_data_columns = no2_data[['Date', 'Site ID','Local Site Name','AQS Parameter Description','Daily Max 1-hour NO2 Concentration'
                              ,'Units','Daily AQI Value']]
-#Pb 
+# Pb dataset
 pb_data_columns = pb_data[['Date', 'Site ID','Local Site Name','AQS Parameter Description','Daily Mean Pb Concentration'
                              ,'Units','Daily AQI Value']]
-#PM10
+# PM10 dataset
 pm10_data_columns = pm10_data[['Date', 'Site ID','Local Site Name','AQS Parameter Description','Daily Mean PM10 Concentration'
                              ,'Units','Daily AQI Value']]
-#PM2.5
+# PM2.5 dataset
 pm25_data_columns = pm25_data[['Date', 'Site ID','Local Site Name','AQS Parameter Description','Daily Mean PM2.5 Concentration'
                              ,'Units','Daily AQI Value']]
-#SO2
+# SO2 dataset
 so2_data_columns = so2_data[['Date', 'Site ID','Local Site Name','AQS Parameter Description','Daily Max 1-hour SO2 Concentration'
                              ,'Units','Daily AQI Value']]
 
+
+
+# ------------------------------------    Section 2: dataset preparation    ------------------------------------
 st.title("Preparing the Dataset")
 st.write("""Initial data sets provided only contain information for one pollutant per data frame. For analysis, all pollutants need to 
          be included in one dataset. For the purposes of this project, all columns of the dataset are not nessearly needed; 
@@ -65,29 +82,45 @@ st.write("""Initial data sets provided only contain information for one pollutan
 
 Below is a sample of what the full data table looks like after combining all criteria pollutant data.
 """)
+# Showing the first 50 entries of the CO dataset after selecting columns
 st.write(co_data_columns.head(50))
 
+# Mergging datasets one by on and assigning suffixes to avoid column ambiguity
 combined_data = pd.merge(pm25_data_columns, ozone_data_columns, on=['Date', 'Site ID'], how='left',suffixes=('', '_ozone'))
 combined_data = pd.merge(combined_data, so2_data_columns, on=['Date', 'Site ID'], how='left',suffixes=('', '_so2'))
 combined_data = pd.merge(combined_data, no2_data_columns, on=['Date', 'Site ID'], how='left',suffixes=('', '_no2'))
 combined_data = pd.merge(combined_data, co_data_columns, on=['Date', 'Site ID'], how='left',suffixes=('', '_co'))
 combined_data = pd.merge(combined_data, pm10_data_columns, on=['Date', 'Site ID'], how='left',suffixes=('', '_pm10'))
 combined_data = pd.merge(combined_data, pb_data_columns, on=['Date', 'Site ID'], how='left',suffixes=('', '_pb'))
-# Generating a combined data file
+
+# Generating a combined data file to be used for the rest of the project
+# We could have created this once and used it throughout the project but we kept it here for 2 reasong:
+# 1- To show the cleaning and merging process.
+# 2- if we decide to allow the user to upload their own epa files, this code will be able to process those files.
 
 combined_data.to_csv('pollution_data_2023_all.csv', index=False)
+
+# ------------------------------------    Section 3: generated data    ------------------------------------    
 st.subheader("Generated Data Sample")
 st.write("""The merging of datasets resulted in lots of missing values since not all pollutants are equaly tracked in all geological locations.
          The dataset merged dataset was saved as a file called 'pollution_data_2023_all.csv' on the apps Github page.
          The merged dataset will use for the rest of this pages analysis. 
          Below is a sample of what the combine data set looks like.""")
+
+# Showing the first 50 entries of the generated data
 st.write(combined_data.head(50))
 
+
+# ------------------------------------    Section 4: Descriptive statistics    ------------------------------------
 st.subheader("Basic Statistics")
 st.write("""The first step of analysis is to calculate basic statistics on the dataset to 
          get an idea for how our data is distributed. Below is a statistical summery of the data.""")
+
+# Shoiwng the descriptive statistics
 st.write(combined_data.describe())
 
+
+# Pollutant names list to be used to filter the data in the following section
 pollutants = [
     'Daily Mean PM2.5 Concentration',
     'Daily Max 8-hour Ozone Concentration',
@@ -98,8 +131,10 @@ pollutants = [
     'Daily Mean Pb Concentration'
 ]
 
-st.subheader('Missingess')
 
+
+# ------------------------------------    Section 5: Missingness    ------------------------------------
+st.subheader('Missingess')
 st.write("""
 The statistical summery above shows diffent variable lengths of data collected accross diffrent polutents. Diffent lengths in variable data are most likely due to:
 
@@ -108,20 +143,25 @@ The statistical summery above shows diffent variable lengths of data collected a
 """)
 st.write("The heatmap below shows a visualization of the missing vsalues.")
 
-
+# ------------------------------------ Subsection 5.1: Heatmaps    ------------------------------------
+ 
 st.subheader("Pollutant Missing Data Heatmap")
 st.write("""As we have mentioned, we have lots of missing data in our dataset that we can visualize in the
          heatmaps below.""")
 
+# Encoding missing values for easier processing 
 missing_data = combined_data[pollutants].isnull().astype(int)
+
+# Generating a heatmap using plotly's graph objects
 heatmap = go.Heatmap(
     # Transpose to have pollutants on y-axis for better visualization
     z=missing_data.T.values,  
+    # Using location as the x-axis to show missingness based on location
     x=combined_data['Local Site Name'],
     y=pollutants
 )
 
-# Update layout
+# Updating the heatmap's layout to edit the size and features
 fig = go.Figure(data=[heatmap])
 fig.update_layout(
     title='Missing Data Across Location',
@@ -130,19 +170,19 @@ fig.update_layout(
     height = 800,
     width = 1500
 )
-
+# Showing the plot on the page
 st.plotly_chart(fig)
 
-
-missing_data = combined_data[pollutants].isnull().astype(int)
+# Generating a heatmap for the dates as the x-axis using plotly's graph objects
 heatmap = go.Heatmap(
     # Transpose to have pollutants on y-axis for better visualization
-    z=missing_data.T.values,  
+    z=missing_data.T.values, 
+    # Using date as the x-axis to show missingness based on dates 
     x=combined_data['Date'],
     y=pollutants
 )
 
-# Update layout
+# Updating the heatmap's layout to edit the size and features
 fig = go.Figure(data=[heatmap])
 fig.update_layout(
     title='Missing Data Across Time',
@@ -151,8 +191,12 @@ fig.update_layout(
     height = 550,
     width = 1500
 )
-
+#showing the plot on the screen
 st.plotly_chart(fig)
+
+
+
+# ------------------------------------ Subsection 5.2: interpretting heatmaps    ------------------------------------
 
 st.subheader("Interpreting the Missing Data Heatmap")
 
@@ -165,6 +209,8 @@ st.markdown("""
   - The**light or white areas represented by a 0** represent **missing data**, while **darker colors represented by a 1**, represent **available data**.
 - **Rows**: Each row represents a different variable (i.e., pollutant or feature) in the dataset.
 - **Columns**: Each column represents a data point for the corresponding variable. """)
+
+# ------------------------------------ Subsection 5.3: insights form the heatmaps    ------------------------------------
 
 st.subheader("Insights form the Heatmaps")
 st.markdown("""

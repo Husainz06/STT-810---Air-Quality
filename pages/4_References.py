@@ -1,12 +1,25 @@
+# ------------------------------------------------------------------------------
+# STT 810 Final Project : Michigan Air Quality Analysis
+# Authors: Hussian Aljafer , Jack Ruhala , Bhavya Chawla
+# Page Description: This page contains the reference to the imformation and the libraries 
+# used to complete this project and the link to the project's github repo
+# Date Created: Dec. 2024
+# Libraries needed to run the page: streamlit
+# Refer to 'README.md' for more information
+# GitHub repository link: https://github.com/Husainz06/STT-810---Air-Quality.git
+# ------------------------------------------------------------------------------
 import streamlit as st
 
+
+#------------------------------------    Section 1: Data source ------------------------------------
 st.title("Data Sources and References")
 st.header("Data Source")
 st.write("""The datasets used of Michigan's pollution levels of the year 2023 come from the from the EPA 
          Webpage. The datasets can be found [here](https://www.epa.gov/outdoor-air-quality-data/download-daily-data).""")
 
-st.header("References")
 
+#------------------------------------    Section 2: References ------------------------------------
+st.header("References")
 st.markdown("""
 Below are the references used in creating this project and in writing different pollutant information and 
             information about the statistical and visualization concepts.
@@ -28,6 +41,7 @@ Below are the references used in creating this project and in writing different 
 - [Contingency table](https://en.wikipedia.org/wiki/Contingency_table#:~:text=In%20statistics%2C%20a%20contingency%20table,%2C%20engineering%2C%20and%20scientific%20research.)
 """)
 
+#------------------------------------    Section 3: Project's code link ------------------------------------
 st.header("Project Materials")
 st.markdown("""We have uploaded all the project's code and datasets on 
             [this GitHub Repository](https://github.com/Husainz06/STT-810---Air-Quality.git). You can view or download the code
