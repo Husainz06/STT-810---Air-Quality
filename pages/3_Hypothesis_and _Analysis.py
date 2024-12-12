@@ -155,10 +155,10 @@ st.pyplot(plt)
 st.subheader("Correlation Heatmap")
 st.write("""The correlation heatmap shows how different pollutants are linearly related to each other. 
     The values range from -1 to 1:
-    - As the value moves closer to one, we have a stronger positive correlation where both variables move in the same direction.
-    - As the value moves closer to  negative one, we have a stronger negative correlation where both variables move in 
+- As the value moves closer to one, we have a stronger positive correlation where both variables move in the same direction.
+- As the value moves closer to  negative one, we have a stronger negative correlation where both variables move in 
          the opposite direction.
-    - A value close to 0 means that there is no linear correlation.
+- A value close to 0 means that there is no linear correlation.
 """)
 plt.figure(figsize=(14, 10))
 # Plotting correlation heatmap using seaborn
